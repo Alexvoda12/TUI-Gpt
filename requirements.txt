@@ -1,0 +1,5 @@
+g4f>=0.2.0.0
+colorama>=0.4.6
+psutil>=5.9.0
+requests>=2.31.0
+websockets>=11.0.3

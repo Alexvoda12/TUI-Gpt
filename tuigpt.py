@@ -195,7 +195,7 @@ def read_file_content(file_path):
     except Exception as e:
         return f"Ошибка при чтении файла {file_path}: {str(e)}"
 
-def analyze_python_file(quest, file_content):
+def analyze_file(quest, file_content):
     """
     Проверяет Python файл на синтаксические ошибки
     """
@@ -206,14 +206,6 @@ def analyze_python_file(quest, file_content):
         return a
     except Exception as e:
         return f"Ошибка при анализе кода: {str(e)}"
-    # try:
-    #     # Попытка компиляции кода
-    #     compile(file_content, '<string>', 'exec')
-    #     return "✓ Файл не содержит синтаксических ошибок"
-    # except SyntaxError as e:
-    #     return f"✗ Синтаксическая ошибка: {str(e)}"
-    # except Exception as e:
-    #     return f"Ошибка при анализе кода: {str(e)}"
 
 def test_python_file(file_path):
     """
@@ -332,20 +324,8 @@ def draw_tui_window(ques, ans):
                 for line_num, line in enumerate(content.split('\n'), 1):
                     print(f'{Fore.CYAN}│{line_num:4d}: {line}{Style.RESET_ALL}')
                 print(f'{Fore.LIGHTBLUE_EX}│ Анализ Python файла:{Style.RESET_ALL}')
-                print(Fore.LIGHTGREEN_EX + analyze_python_file(ques, content))
-                # Проверяем расширение файла
-                # if file_to_analyze.endswith('.py'):
-                #     print(f'{Fore.LIGHTBLUE_EX}│ Анализ Python файла:{Style.RESET_ALL}')
-                #     syntax_check = analyze_python_file(content)
-                #     print(f'{Fore.LIGHTBLUE_EX}│ {syntax_check}{Style.RESET_ALL}')
-                    
-                #     # Запускаем файл для тестирования
-                #     print(f'{Fore.LIGHTBLUE_EX}│ Запуск файла для тестирования:{Style.RESET_ALL}')
-                #     test_result = test_python_file(file_to_analyze)
-                #     for line in test_result.split('\n'):
-                #         print(f'{Fore.LIGHTBLUE_EX}│ {line}{Style.RESET_ALL}')
+                print(Fore.LIGHTGREEN_EX + analyze_file(ques, content))
                 
-                # Показываем содержимое файла
                 print(f'{Fore.CYAN}│{Style.RESET_ALL}')
             
             print(f'{Fore.LIGHTBLUE_EX}├─{"─"*50}{Style.RESET_ALL}')
