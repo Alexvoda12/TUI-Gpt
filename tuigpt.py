@@ -207,36 +207,6 @@ def analyze_file(quest, file_content):
     except Exception as e:
         return f"Ошибка при анализе кода: {str(e)}"
 
-def test_python_file(file_path):
-    """
-    Запускает Python файл и возвращает результат
-    """
-    try:
-        path = Path(file_path)
-        if not path.is_absolute():
-            path = Path.cwd() / path
-        
-        if not path.exists():
-            return "Файл не найден"
-        
-        result = subprocess.run(
-            ['python', str(path)],
-            capture_output=True,
-            text=True,
-            timeout=10
-        )
-        
-        output = f"Код возврата: {result.returncode}\n"
-        if result.stdout:
-            output += f"Вывод:\n{result.stdout}\n"
-        if result.stderr:
-            output += f"Ошибки:\n{result.stderr}"
-        
-        return output
-    except subprocess.TimeoutExpired:
-        return "Таймаут: программа выполнялась слишком долго (>10 секунд)"
-    except Exception as e:
-        return f"Ошибка при запуске файла: {str(e)}"
 
 def answer(query: str, hystory: list) -> str:
     response = g4f.ChatCompletion.create(
