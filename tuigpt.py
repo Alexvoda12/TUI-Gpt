@@ -52,6 +52,21 @@ def check_git_installation():
         )
         if result.returncode == 0:
             version = result.stdout.strip()
+            
+            try:
+                with open('Username.cfg', 'r', encoding='utf-8') as name:
+                    username = name
+            except:
+                result_name = subprocess.run(
+                    ['git', 'config', 'user.name'],
+                    capture_output=True,
+                    text=True,
+                    shell=True
+                )
+                username = input("Enter your username at GitHub(or Enter for automatic): ") or result_name.stdout.strip()
+                with open('Username.cfg', 'w', encoding='utf-8') as name:
+                    name.write(username)
+            version += f'\nUsrname {username}'
             path = get_program_path('git')
             return True, version, path
     except Exception:
