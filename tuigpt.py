@@ -66,7 +66,7 @@ def check_git_installation():
                 username = input("Enter your username at GitHub(or Enter for automatic): ") or result_name.stdout.strip()
                 with open('Username.cfg', 'w', encoding='utf-8') as name:
                     name.write(username)
-            version += f'\nUsrname {username}'
+            version += f'\nGit Usrname {username}'
             path = get_program_path('git')
             return True, version, path
     except Exception:
