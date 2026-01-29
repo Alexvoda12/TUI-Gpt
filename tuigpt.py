@@ -474,7 +474,7 @@ file calculator.py
 - Командная строка (через cmd)
 - Создание/редактирование файлов (через file)
 - Чтение файлов (через readfile)
-- Анализ файлов (через analyze) - проверка синтаксиса и запуск
+- Анализ файлов (через analyze) - проверка синтаксис а и запуск
 - Git: {check_git_installation()[1] if check_git_installation()[0] else "Не установлен"}
 - GitHub CLI: {check_gh_installation()[1] if check_gh_installation()[0] else "Не установлен"}
 - Docker: {check_docker()[1] if check_docker()[0] else "Не установлен"}
@@ -509,18 +509,40 @@ print(Style.RESET_ALL)
 
 print(f'{Fore.CYAN}╭─ Info: {Fore.LIGHTBLACK_EX}Загрузка завершена.{Style.RESET_ALL}')
 
+def get_multiline_input():
+    """
+    Функция для получения многострочного ввода от пользователя
+    """
+    lines = []
+    print(f'{Fore.CYAN}│')
+    print(f'{Fore.CYAN}│')
+    print(f'├─ {Fore.LIGHTCYAN_EX}Path: {Style.RESET_ALL}{Fore.LIGHTGREEN_EX}{current_dir}{Style.RESET_ALL}')
+    print(f'{Fore.CYAN}{bstart}─ You: (введите текст, пустая строка для завершения)')
+    print(f'{Fore.CYAN}│ {Fore.LIGHTCYAN_EX}', end='')
+    
+    # Первая строка
+    line = input()
+    lines.append(line)
+    
+    # Последующие строки
+    while True:
+        print(f'{Fore.CYAN}│ {Fore.LIGHTCYAN_EX}', end='')
+        line = input()
+        if line.strip() == '':
+            break
+        lines.append(line)
+    
+    print(f'{Fore.CYAN}│{Style.RESET_ALL}')
+    return '\n'.join(lines)
+
 while True:
     try:
         # Обновляем содержимое директории перед каждым запросом
         current_dir = Path.cwd()
         dir_contents = "\n".join([f"  - {item}" for item in sorted([p.name for p in current_dir.iterdir()])]) if list(current_dir.iterdir()) else "  (пусто)"
         
-        query = input(f'''{Fore.CYAN}│
-│
-├─ {Fore.LIGHTCYAN_EX}Path: {Style.RESET_ALL}{Fore.LIGHTGREEN_EX}{current_dir}{Style.RESET_ALL}
-{Fore.CYAN}{bstart}─ You:
-│ {Fore.LIGHTCYAN_EX}''')
-        print(Fore.CYAN + '│' + Style.RESET_ALL)
+        # Получаем многострочный ввод
+        query = get_multiline_input()
         
         if query.lower() == 'exit':
             break
